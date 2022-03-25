@@ -1,0 +1,19 @@
+version: '3'
+services:      
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    container_name: "sz-rabbitmq"
+    environment:                        # 设置环境变量,相当于docker run命令中的-e
+      TZ: Asia/Shanghai
+      LANG: en_US.UTF-8
+    volumes:
+      - ./rabbitmq/config/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+      - ./rabbitmq/config/10-default-guest-user.conf:/etc/rabbitmq/conf.d/10-default-guest-user.conf
+      - ./rabbitmq/data:/var/lib/rabbitmq
+      - ./rabbitmq/plugins/rabbitmq_delayed_message_exchange-3.9.0.ez:/opt/rabbitmq/plugins/rabbitmq_delayed_message_exchange-3.9.0.ez
+    ports:
+      - "35672:15672"
+      - "35671:5672"
+      - "31613:61613"  
+    restart: always
+      
