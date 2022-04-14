@@ -1,0 +1,18 @@
+version: '3'
+services:
+  postgres:
+    image: "postgres:10.4"
+    environment:
+      #- POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=postgresdb
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=manager
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      default:          # use specified network default, and set alias to postgres，
+        aliases:        # after set alias can access by the alias in the same network
+          - postgres            
+    restart: unless-stopped
